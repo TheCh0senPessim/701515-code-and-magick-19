@@ -11,9 +11,9 @@ var BAR_HEIGHT = FONT_GAP - 150;
 var BAR_GAP = 40;
 var COLUMNS_DISTANCE = 50;
 
-var renderCloud = function (ctx, x, y, color) {
+var renderCloud = function (ctx, cloudGap, color) {
   ctx.fillStyle = color;
-  ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
+  ctx.fillRect(CLOUD_X + cloudGap, CLOUD_Y + cloudGap, CLOUD_WIDTH, CLOUD_HEIGHT);
 };
 
 var getMaxElement = function (arr) {
@@ -27,8 +27,8 @@ var getMaxElement = function (arr) {
 };
 
 window.renderStatistics = function (ctx, names, times) {
-  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
+  renderCloud(ctx, GAP, 'rgba(0, 0, 0, 0.7)');
+  renderCloud(ctx, 0, '#fff');
 
   ctx.fillStyle = '#000';
   ctx.font = 'bold 16px PT Mono';
