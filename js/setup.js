@@ -4,17 +4,82 @@ var WIZARD_NAMES = ['Иван', 'Хуан', 'Себастьян', 'Мария', 
 var WIZARD_LAST_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
+var ESC_KEY = 'Escape';
+var ENTER_KEY = 'Enter';
 
 var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
-
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = userDialog.querySelector('.setup-close');
+var wizardCoat = userDialog.querySelector('.setup-wizard .wizard-coat');
+var wizardEyes = userDialog.querySelector('.setup-wizard .wizard-eyes');
+var wizardFireball = userDialog.querySelector('.setup-fireball-wrap');
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+
 
 var getRandomInt = function (int) {
   var randomInt = Math.floor(Math.random() * int) + 1;
   return randomInt;
 };
+
+var onCoatClick = function (evt) {
+  evt.target.style.fill = COAT_COLORS[getRandomInt(COAT_COLORS.length - 1)];
+  userDialog.querySelector('.setup-wizard-appearance input:nth-last-child(2)').value = evt.target.style.fill;
+};
+
+var onEyesClick = function (evt) {
+  evt.target.style.fill = EYES_COLORS[getRandomInt(EYES_COLORS.length - 1)];
+  userDialog.querySelector('.setup-wizard-appearance input:nth-last-child(1)').value = evt.target.style.fill;
+};
+
+var onFireballClick = function (evt) {
+  var newFireballColor = FIREBALL_COLORS[getRandomInt(FIREBALL_COLORS.length - 1)];
+  evt.target.style.backgroundColor = newFireballColor;
+  userDialog.querySelector('.setup-fireball-wrap input:nth-last-child(1)').value = newFireballColor;
+};
+
+var onPopupEscPress = function (evt) {
+  if (evt.key === ESC_KEY && !evt.target.matches('input[class="setup-user-name"]')) {
+    closePopup();
+  }
+};
+
+var openPopup = function () {
+  userDialog.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+  wizardCoat.addEventListener('click', onCoatClick);
+  wizardEyes.addEventListener('click', onEyesClick);
+  wizardFireball.addEventListener('click', onFireballClick);
+};
+
+var closePopup = function () {
+  userDialog.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+  wizardCoat.removeEventListener('click', onCoatClick);
+  wizardEyes.removeEventListener('click', onEyesClick);
+  wizardFireball.removeEventListener('click', onFireballClick);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    closePopup();
+  }
+});
 
 var wizards = [
   {
@@ -39,7 +104,7 @@ var wizards = [
   }
 ];
 
-var renderWizard = function (wizard) {
+var createWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
 
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
@@ -48,10 +113,14 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < wizards.length; i++) {
-  fragment.appendChild(renderWizard(wizards[i]));
-}
-similarListElement.appendChild(fragment);
+var renderWizards = function () {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < wizards.length; i++) {
+    fragment.appendChild(createWizard(wizards[i]));
+  }
+  similarListElement.appendChild(fragment);
+};
+
+renderWizards();
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
