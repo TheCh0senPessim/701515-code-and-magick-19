@@ -18,18 +18,18 @@
 
   var onCoatClick = function (evt) {
     evt.target.style.fill = window.consts.COAT_COLORS[getRandomInt(window.consts.COAT_COLORS.length - 1)];
-    userDialog.querySelector('.setup-wizard-appearance input:nth-last-child(2)').value = evt.target.style.fill;
+    userDialog.querySelector('input[name="coat-color"]').value = evt.target.style.fill;
   };
 
   var onEyesClick = function (evt) {
     evt.target.style.fill = window.consts.EYES_COLORS[getRandomInt(window.consts.EYES_COLORS.length - 1)];
-    userDialog.querySelector('.setup-wizard-appearance input:nth-last-child(1)').value = evt.target.style.fill;
+    userDialog.querySelector('input[name="eyes-color"]').value = evt.target.style.fill;
   };
 
   var onFireballClick = function (evt) {
     var newFireballColor = window.consts.FIREBALL_COLORS[getRandomInt(window.consts.FIREBALL_COLORS.length - 1)];
     evt.target.style.backgroundColor = newFireballColor;
-    userDialog.querySelector('.setup-fireball-wrap input:nth-last-child(1)').value = newFireballColor;
+    userDialog.querySelector('input[name="fireball-color"]').value = newFireballColor;
   };
 
   var onPopupEscPress = function (evt) {
