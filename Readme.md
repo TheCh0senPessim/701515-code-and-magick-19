@@ -2,7 +2,10 @@
 
 * Студент: [Никита Макаров](https://up.htmlacademy.ru/javascript/19/user/701515).
 * Наставник: `Неизвестно`.
-
+---
+Опубликованная версия:
+https://htmlacademy-javascript.github.io/701515-code-and-magick-19/5/
+---
 ---
 
 _Не удаляйте и не обращайте внимание на файлы:_<br>
